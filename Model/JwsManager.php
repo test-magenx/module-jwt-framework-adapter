@@ -101,11 +101,8 @@ class JwsManager
             if ($jws->getPayload()->getContentType()) {
                 $protected['cty'] = $jws->getPayload()->getContentType();
             }
-            if ($jwk->getKeyId()) {
-                $protected['kid'] = $jwk->getKeyId();
-            }
             if ($jws->getProtectedHeaders()) {
-                $protected = array_merge($protected, $this->extractHeaderData($jws->getProtectedHeaders()[$i]));
+                $protected = $this->extractHeaderData($jws->getProtectedHeaders()[$i]);
             }
             $protected['alg'] = $alg;
             $unprotected = [];

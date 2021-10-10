@@ -114,11 +114,7 @@ class JweManager
         } else {
             foreach ($jwe->getPerRecipientUnprotectedHeaders() as $i => $header) {
                 $jwk = $encryptionSettings->getJwkSet()->getKeys()[$i];
-                $headerData = [];
-                if ($jwk->getKeyId()) {
-                    $headerData['kid'] = $jwk->getKeyId();
-                }
-                $headerData = array_merge($headerData, $this->extractHeaderData($header));
+                $headerData = $this->extractHeaderData($header);
                 $headerData['alg'] = $jwk->getAlgorithm();
                 $builder = $builder->addRecipient(new AdapterJwk($jwk->getJsonData()), $headerData);
             }
